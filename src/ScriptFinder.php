@@ -4,56 +4,44 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class ScriptFinder{
     
-    private $currentScripts = [
+    public static $connection;
+    public static $statues;
+    public static $currentScripts = [
         //'TimeRelativeThings'
-        'SamePictureEveryDay'
+        'SendAPicture'
     ];
 
-    private $connection;
+    public static function initScripts(){
 
-    private $statues;
-
-    function __construct(){
-        require_once '../tokens.php';
-        require_once "lib/twitteroauth-1.0.1/autoload.php";
-
-        $this->connection = new TwitterOAuth(Tokens::apiKey, Tokens::apiSecretKey, Tokens::accessToken, Tokens::accessTokenSecret);
+        self::$connection = new TwitterOAuth(Tokens::API_KEY, Tokens::API_SECRET_KEY, Tokens::ACCESS_TOKEN, Tokens::ACCESS_TOKEN_SECRET);
         //$statues = $connection->get("account/verify_credentials");
-    }
 
-    public static function findScript(){
-        $choosenScript = $this->$currentScripts[rand(0, count($this->$currentScripts))];
+        $choosenScript = self::$currentScripts[rand(1, count(self::$currentScripts)) - 1];
         switch($choosenScript){
             case 'TimeRelativeThings':
-                $this->timeRelativeThings();
                 echo "time";
+                require_once 'scripts/TimeRelativeThings.php';
+                TimeRelativeThings::init();
                 break;
-            case 'SamePictureEveryDay':
-                $this->samePictureEveryday();
+            case 'SendAPicture':
                 echo "picture";
+                require_once 'scripts/SendAPicture.php';
+                SendAPicture::init();
                 break;
         }
+    }
 
-        if ($connection->getLastHttpCode() == 200) {
+    public static function SendTweet($uri, $data){
+        //$statues = $connection->post("statuses/update", ["status" => $message]);
+        self::$statues = $connection->post($uri, $data);
+
+        if (self::$connection->getLastHttpCode() == 200) {
             echo "Success";
         } else {
             echo "Error";
         }
         echo '<br><br><br>';
-        var_dump($statues);
+        var_dump(self::$statues);
     }
 
-    private function TimeRelativeThings(){
-        require_once 'TimeRelativeThings.php';
-
-        $message = TimeRelativeThings::findScript();
-        //$statues = $connection->post("statuses/update", ["status" => $message]);
-    }
-
-    private function samePictureEveryday(){
-        require_once 'TimeRelativeThings.php';
-
-        $media = SamePictureEveryDay::findScript();
-        //$statues = $connection->post("statuses/update", ["status" => $message]);
-    }
 }

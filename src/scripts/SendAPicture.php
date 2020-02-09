@@ -1,6 +1,6 @@
 <?php
 
-class TimeRelativeThings{
+class SendAPicture{
 
     public static function init(){
         $time = time();

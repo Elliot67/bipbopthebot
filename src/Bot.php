@@ -1,5 +1,7 @@
 <?php
 
-require_once 'ScriptFinder.php';
+require_once '../Tokens.php';
+require_once "lib/twitteroauth-1.0.1/autoload.php";
 
-ScriptFinder::findScript();
+require_once 'ScriptFinder.php';
+ScriptFinder::initScripts();
