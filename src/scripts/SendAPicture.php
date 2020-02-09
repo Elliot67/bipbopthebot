@@ -9,7 +9,8 @@ class SendAPicture{
     public static function init(){
         $randomImage = random_int(1, count(self::$availablePictures)) - 1;
 
-        $image = 'img/SendAPicture/' . self::$availablePictures[$randomImage];
+        $image = __DIR__ . '/../img/SendAPicture/' . self::$availablePictures[$randomImage];
+        var_dump($image);
         ScriptFinder::sendMedia($image);
 
         $data = ["media_ids" => ScriptFinder::$mediaId];

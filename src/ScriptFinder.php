@@ -20,11 +20,11 @@ class ScriptFinder{
         $choosenScript = self::$currentScripts[random_int(1, count(self::$currentScripts)) - 1];
         switch($choosenScript){
             case 'TimeRelativeThings':
-                require_once 'scripts/TimeRelativeThings.php';
+                require_once __DIR__ . '/scripts/TimeRelativeThings.php';
                 TimeRelativeThings::init();
                 break;
             case 'SendAPicture':
-                require_once 'scripts/SendAPicture.php';
+                require_once __DIR__ . '/scripts/SendAPicture.php';
                 SendAPicture::init();
                 break;
         }
