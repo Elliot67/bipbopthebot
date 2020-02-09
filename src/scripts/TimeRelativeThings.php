@@ -7,7 +7,7 @@ class TimeRelativeThings{
         $random = random_int(1, $time);
 
         $data = ["status" => $random]
-        ScriptFinder::sendTweet("statuses/update", $data);
+        ScriptFinder::sendTweet($data);
     }
 
 }

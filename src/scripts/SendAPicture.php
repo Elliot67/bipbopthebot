@@ -2,12 +2,18 @@
 
 class SendAPicture{
 
-    public static function init(){
-        $time = time();
-        $random = random_int(1, $time);
+    public static $availablePictures = [
+        'zidane1.jpg',
+    ];
 
-        $data = ["status" => $random]
-        ScriptFinder::sendTweet("statuses/update", $data);
+    public static function init(){
+        $randomImage = random_int(1, count(self::$availablePictures)) - 1;
+
+        $image = 'img/SendAPicture/' . self::$availablePictures[$randomImage];
+        ScriptFinder::sendMedia($image);
+
+        $data = ["media_ids" => ScriptFinder::$mediaId];
+        ScriptFinder::sendTweet($data);
     }
 
 }
